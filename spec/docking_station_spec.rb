@@ -32,7 +32,7 @@ RSpec.describe DockingStation do
       it {is_expected.to respond_to(:bikes)}
 
       it "raises an error when docking station is full" do
-        DEFAULT_CAPACITY.times {subject.dock(bike)}
+        DockingStation::DEFAULT_CAPACITY.times {subject.dock(bike)}
         expect {subject.dock(bike)}.to raise_error("Docking station full")
       end
     end
