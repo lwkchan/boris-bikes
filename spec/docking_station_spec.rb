@@ -4,7 +4,7 @@ RSpec.describe DockingStation do
 
     it {is_expected.to respond_to(:release_bike)}
 
-    it "release_bike creates a new bike object" do
+    it "release_bike returns an existing bike object" do
       expect(subject.release_bike).to be_instance_of(Bike)
     end
 
@@ -20,5 +20,9 @@ RSpec.describe DockingStation do
     end
 
     it {is_expected.to respond_to(:bike)}
+
+    it "release_bikes raises an error when no bikes available" do
+      expect {(subject.release_bike)}.to raise_error
+    end
 
 end
