@@ -6,10 +6,9 @@ RSpec.describe DockingStation do
     bike = Bike.new
 
     describe '#release_bike' do
-      it {is_expected.to respond_to(:release_bike)}
-    end
 
-    describe '#release_bike' do
+      it {is_expected.to respond_to(:release_bike)}
+
       it "returns an existing bike object" do
         subject.dock(bike)
         expect(subject.release_bike).to be_instance_of(Bike)
@@ -28,13 +27,13 @@ RSpec.describe DockingStation do
       it {is_expected.to respond_to(:dock).with(1).argument}
 
       it "expects a bike to be docked" do
-        expect(subject.dock(bike)).to eq (bike)
+        expect(subject.dock(bike)).to eq ([bike])
       end
 
-      it {is_expected.to respond_to(:bike)}
+      it {is_expected.to respond_to(:bikes)}
 
-      it "raises an error when bike is already docked" do
-        subject.dock(bike)
+      it "raises an error when docking station is full" do
+        20.times {subject.dock(bike)}
         expect {subject.dock(bike)}.to raise_error("Docking station full")
       end
     end
