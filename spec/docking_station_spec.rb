@@ -1,30 +1,42 @@
 require 'docking_station'
 
+
 RSpec.describe DockingStation do
 
-    it {is_expected.to respond_to(:release_bike)}
+    bike = Bike.new
 
-    it "release_bike returns an existing bike object" do
-      bike = Bike.new
-      subject.dock(bike)
-      expect(subject.release_bike).to be_instance_of(Bike)
+    describe '#release_bike' do
+      it {is_expected.to respond_to(:release_bike)}
+    end
+
+    describe '#release_bike' do
+      it "returns an existing bike object" do
+        subject.dock(bike)
+        expect(subject.release_bike).to be_instance_of(Bike)
+      end
+
+      it "raises an error when no bikes available" do
+        expect {(subject.release_bike)}.to raise_error("No bikes available")
+      end
     end
 
     it "When new bike object created checks the bike is working" do
-      expect(Bike.new).to be_working
+      expect(bike).to be_working
     end
 
-    it {is_expected.to respond_to(:dock).with(1).argument}
+    describe '#dock' do
+      it {is_expected.to respond_to(:dock).with(1).argument}
 
-    it "expects a bike to be docked" do
-      bike = Bike.new
-      expect(subject.dock(bike)).to eq (bike)
-    end
+      it "expects a bike to be docked" do
+        expect(subject.dock(bike)).to eq (bike)
+      end
 
-    it {is_expected.to respond_to(:bike)}
+      it {is_expected.to respond_to(:bike)}
 
-    it "release_bikes raises an error when no bikes available" do
-      expect {(subject.release_bike)}.to raise_error("No bikes available")
+      it "raises an error when bike is already docked" do
+        subject.dock(bike)
+        expect {subject.dock(bike)}.to raise_error("Docking station full")
+      end
     end
 
 end
